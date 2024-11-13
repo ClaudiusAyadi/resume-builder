@@ -1,0 +1,27 @@
+name: resume-builder
+services:
+  mongo:
+    container_name: resume-db
+    image: mongo:latest
+    env_file:
+      - .env.development
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+    networks:
+      - resume-vnet
+
+  api:
+    container_name: resume-api
+    build: ./api
+    ports:
+      - 3000:3000
+    networks:
+      - resume-vnet
+    depends_on:
+      - mongo
+
+networks:
+  resume-vnet:
+    driver: bridge
