@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Others
+*.env.*
+*.log
+*.lock
+pnpm-lock.yaml
+
