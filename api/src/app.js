@@ -1,14 +1,18 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
-import config from './libs/configs/index.js';
-import { init } from './libs/initializers/index.js';
+import path from 'path';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.static(path.join(process.cwd(), 'public')));
+app.use(cors());
 
 app.use((req, res, next) => {
 	req.requestTime = new Date().toLocaleTimeString();
-	console.log(`Hitting: ${req.originalUrl} at ${req.requestTime}`);
+	console.info(`${req.requestTime}: ${req.method} - ${req.originalUrl}`);
 	next();
 });
 

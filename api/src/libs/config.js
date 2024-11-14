@@ -4,32 +4,24 @@ export default {
 		dev: process.env.NODE_ENV === 'development',
 		live: process.env.NODE_ENV === 'production',
 		staging: process.env.NODE_ENV === 'staging',
-		test: process.env.NODE_ENV === 'test'
+		test: process.env.NODE_ENV === 'test',
 	},
 	api: {
-		prefix: '/api/v1',
-		version: '1'
+		name: process.env.APP_NAME || 'API',
+		prefix: process.env.APP_PREFIX || '/api/v1',
+		version: process.env.APP_VERSION || '1.0.0',
 	},
 	db: {
-		protocol: process.env.DB_PROTOCOL,
-		username: process.env.DB_USERNAME,
-		password: process.env.DB_PASSWORD,
-		url: process.env.DB_URL,
-		database: process.env.DB_DATABASE
+		protocol: process.env.DB_PROTOCOL || 'mongodb://',
+		url: process.env.DB_URL || 'localhost:27017',
+		database: process.env.DB_DATABASE || 'test_db',
 	},
+
 	jwt: {
 		name: process.env.JWT_NAME,
 		secret: process.env.JWT_SECRET,
 		expiration: process.env.JWT_EXPIRATION,
-		cookies: process.env.JWT_COOKIES
-	},
-	mail: {
-		host: process.env.EMAIL_HOST,
-		port: process.env.EMAIL_PORT,
-		auth: {
-			user: process.env.EMAIL_USER,
-			pass: process.env.EMAIL_PASSWORD
-		}
+		cookies: process.env.JWT_COOKIES,
 	},
 
 	/**
@@ -41,22 +33,22 @@ export default {
 	 * @property {string} routes[].handler - Path to the route handler relative to the routes directory
 	 */
 	routes: {
-		suffix: 'routes',
-		defaults: {
-			// default routes - don't change
-			enabled: true,
-			handler: 'defaults',
-			path: '/defaults'
-		},
 		auth: {
 			enabled: true,
 			handler: 'auth',
-			path: '/auth'
+			path: '/auth',
 		},
-		search: {
+		users: {
 			enabled: true,
-			handler: 'search',
-			path: '/search'
-		}
-	}
+			handler: 'users',
+			path: '/users',
+		},
+		defaults: {
+			// default routes - do not change
+			enabled: true,
+			handler: 'defaults',
+			path: '/defaults',
+		},
+		suffix: 'routes',
+	},
 };

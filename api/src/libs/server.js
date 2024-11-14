@@ -1,16 +1,15 @@
-import config from './configs/index.js';
+import config from './config.js';
 import app from '../app.js';
-import { init } from './initializers/index.js';
+import { init } from './init/index.js';
 
 export const server = async () => {
-	const port = config.port;
-
 	try {
-		app.listen(port, async () => {
-			await init(app, config);
-			console.info(`🚀 Server up & running on port ${port}`);
+		await init(app, config);
+		app.listen(config.port, () => {
+			console.log(`🚀 Server running on port ${config.port}`);
 		});
 	} catch (error) {
-		console.error('Error starting server:', error.message);
+		console.error('Failed to initialize application:', error);
+		process.exit(1);
 	}
 };
